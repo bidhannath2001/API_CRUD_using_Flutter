@@ -50,7 +50,25 @@ Assuming a backend REST API:
 ---
 
 ## 🖥 Screenshots
+<div align="center">
 
+<table>
+  <tr>
+   <td align="center">
+      <img src="lib/assets/01.png" width="200" alt="Main Screen"/><br/>
+      <b>Main Screen</b>
+    </td>
+    <td align="center">
+      <img src="lib/assets/02.png" width="200" alt="Details"/><br/>
+      <b>Details</b>
+    </td>
+    <td align="center">
+      <img src="lib/assets/03.png" width="200" alt="Dialog"/><br/>
+      <b>Dialog</b>
+    </td>
+  </tr>
+</table>
+</div>
 
 - Product List (Grid View)
 - Product Detail Page
