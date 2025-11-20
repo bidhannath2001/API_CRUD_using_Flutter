@@ -50,7 +50,7 @@ class _ProductscreenState extends State<Productscreen> {
         child: productController.isLoading
             ? Center(
                 child: LoadingAnimationWidget.inkDrop(
-                    color: Colors.orange, size: 100))
+                    color: Colors.deepPurple, size: 100))
             : GridView.builder(
                 physics: const AlwaysScrollableScrollPhysics(),
                 itemCount: productController.products.length,
@@ -63,193 +63,178 @@ class _ProductscreenState extends State<Productscreen> {
                 itemBuilder: (context, index) {
                   final item = productController.products[index];
                   return GestureDetector(
-                    onTap: () {},
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 250),
-                      curve: Curves.easeOut,
-                      child: Card(
-                        elevation: 5,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18)),
-                        shadowColor: Colors.deepPurple.withOpacity(0.3),
-                        clipBehavior: Clip.antiAlias,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            GestureDetector(
-                              onTap: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ProductDetailPage(
-                                            product: item,
-                                          ))),
-                              child: Hero(
-                                tag: 'product-${item.sId}', // unique tag
-                                child: Container(
-                                  height: 130,
-                                  width: double.infinity,
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ProductDetailPage(
+                                  product: item,
+                                ))),
+                    child: Card(
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18)),
+                      shadowColor: Colors.deepPurple.withOpacity(0.3),
+                      clipBehavior: Clip.antiAlias,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Hero(
+                            tag: 'product-${item.sId}', // unique tag
+                            child: Container(
+                              height: 130,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Colors.deepPurple.shade50.withOpacity(0.2),
+                                    Colors.deepPurple.shade100.withOpacity(0.2)
+                                  ],
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                ),
+                              ),
+                              child: Image.network(
+                                item.img.toString(),
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) =>
+                                    const Center(
+                                        child:
+                                            Icon(Icons.broken_image, size: 40)),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Text(
+                              item.productName.toString(),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black87,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 6),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Row(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 4, horizontal: 8),
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        Colors.deepPurple.shade50
-                                            .withOpacity(0.2),
-                                        Colors.deepPurple.shade100
-                                            .withOpacity(0.2)
-                                      ],
-                                      begin: Alignment.topCenter,
-                                      end: Alignment.bottomCenter,
+                                    gradient: const LinearGradient(
+                                      colors: [Colors.pink, Colors.orange],
                                     ),
+                                    borderRadius: BorderRadius.circular(12),
                                   ),
-                                  child: Image.network(
-                                    item.img.toString(),
-                                    fit: BoxFit.cover,
-                                    errorBuilder:
-                                        (context, error, stackTrace) =>
-                                            const Center(
-                                                child: Icon(Icons.broken_image,
-                                                    size: 40)),
+                                  child: Text(
+                                    "\$${item.totalPrice}",
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                 ),
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              child: Text(
-                                item.productName.toString(),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                                style: const TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black87,
+                                const SizedBox(width: 10),
+                                Text(
+                                  "Qty: ${item.qty}",
+                                  style: TextStyle(color: Colors.grey.shade700),
                                 ),
-                              ),
+                              ],
                             ),
-                            const SizedBox(height: 6),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 4, horizontal: 8),
-                                    decoration: BoxDecoration(
-                                      gradient: const LinearGradient(
-                                        colors: [Colors.pink, Colors.orange],
-                                      ),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    child: Text(
-                                      "\$${item.totalPrice}",
-                                      style: const TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
-                                    ),
+                          ),
+                          const Spacer(),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 5, right: 5, bottom: 5),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                InkWell(
+                                  borderRadius: BorderRadius.circular(30),
+                                  onTap: () {
+                                    ShowDialog(
+                                            context: context,
+                                            refresh: fetchData)
+                                        .ProductDialog(
+                                            item, item.sId.toString());
+                                  },
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(6),
+                                    child: Icon(Icons.edit,
+                                        color: Colors.orange, size: 26),
                                   ),
-                                  const SizedBox(width: 10),
-                                  Text(
-                                    "Qty: ${item.qty}",
-                                    style:
-                                        TextStyle(color: Colors.grey.shade700),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const Spacer(),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 5, right: 5, bottom: 5),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  InkWell(
-                                    borderRadius: BorderRadius.circular(30),
-                                    onTap: () {
-                                      ShowDialog(
-                                              context: context,
-                                              refresh: fetchData)
-                                          .ProductDialog(
-                                              item, item.sId.toString());
-                                    },
-                                    child: const Padding(
-                                      padding: EdgeInsets.all(6),
-                                      child: Icon(Icons.edit,
-                                          color: Colors.orange, size: 26),
-                                    ),
-                                  ),
-                                  InkWell(
-                                    borderRadius: BorderRadius.circular(30),
-                                    onTap: () async {
-                                      showDialog(
-                                        context: context,
-                                        builder: (context) => AlertDialog(
-                                          content: Text(
-                                            "Are you sure you want to delete ${item.productName}?",
-                                            style:
-                                                const TextStyle(fontSize: 18),
-                                          ),
-                                          actions: [
-                                            TextButton(
-                                                onPressed: () =>
-                                                    Navigator.pop(context),
-                                                child: const Text("Cancel")),
-                                            TextButton(
-                                              onPressed: () async {
-                                                await productController
-                                                    .deleteProduct(
-                                                        item.sId.toString())
-                                                    .then(
-                                                  (value) async {
-                                                    if (value) {
-                                                      await fetchData();
-                                                      Navigator.pop(context);
-                                                      ScaffoldMessenger.of(
-                                                              context)
-                                                          .showSnackBar(
-                                                        const SnackBar(
-                                                          content: Text(
-                                                              "Product has been deleted"),
-                                                        ),
-                                                      );
-                                                    } else {
-                                                      ScaffoldMessenger.of(
-                                                              context)
-                                                          .showSnackBar(
-                                                        const SnackBar(
-                                                          content: Text(
-                                                              "Something went wrong"),
-                                                        ),
-                                                      );
-                                                    }
-                                                  },
-                                                );
-                                              },
-                                              child: const Text(
-                                                "Delete",
-                                                style: TextStyle(
-                                                    color: Colors.red),
-                                              ),
-                                            )
-                                          ],
+                                ),
+                                InkWell(
+                                  borderRadius: BorderRadius.circular(30),
+                                  onTap: () async {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                        content: Text(
+                                          "Are you sure you want to delete ${item.productName}?",
+                                          style: const TextStyle(fontSize: 18),
                                         ),
-                                      );
-                                    },
-                                    child: const Padding(
-                                      padding: EdgeInsets.all(6),
-                                      child: Icon(Icons.delete,
-                                          color: Colors.red, size: 26),
-                                    ),
+                                        actions: [
+                                          TextButton(
+                                              onPressed: () =>
+                                                  Navigator.pop(context),
+                                              child: const Text("Cancel")),
+                                          TextButton(
+                                            onPressed: () async {
+                                              await productController
+                                                  .deleteProduct(
+                                                      item.sId.toString())
+                                                  .then(
+                                                (value) async {
+                                                  if (value) {
+                                                    await fetchData();
+                                                    Navigator.pop(context);
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      const SnackBar(
+                                                        content: Text(
+                                                            "Product has been deleted"),
+                                                      ),
+                                                    );
+                                                  } else {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      const SnackBar(
+                                                        content: Text(
+                                                            "Something went wrong"),
+                                                      ),
+                                                    );
+                                                  }
+                                                },
+                                              );
+                                            },
+                                            child: const Text(
+                                              "Delete",
+                                              style:
+                                                  TextStyle(color: Colors.red),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(6),
+                                    child: Icon(Icons.delete,
+                                        color: Colors.red, size: 26),
                                   ),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
                       ),
                     ),
                   );
@@ -276,7 +261,7 @@ class _ProductscreenState extends State<Productscreen> {
         ),
         child: FloatingActionButton(
           elevation: 0,
-          backgroundColor: Colors.transparent, 
+          backgroundColor: Colors.transparent,
           onPressed: () {
             ShowDialog(context: context, refresh: fetchData)
                 .ProductDialog(Data(), "");
